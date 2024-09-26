@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "458754046449",
+    "project_id": "teste-app-e3f6e",
+    "storage_bucket": "teste-app-e3f6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458754046449:android:49fb795fd5773c7016ac50",
+        "android_client_info": {
+          "package_name": "com.example.diario_de_viagens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDzOeLn1LoGgjmWu2efF-gaSc3IqBp-zI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
