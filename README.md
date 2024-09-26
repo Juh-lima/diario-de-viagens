@@ -1,6 +1,6 @@
 # diario_de_viagens
 
-A new Flutter project.
+App teste que fiz para desenvolver minhas habilidades em Flutter.
 
 ## Getting Started
 
