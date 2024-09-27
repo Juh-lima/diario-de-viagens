@@ -1,3 +1,4 @@
+import 'package:diario_de_viagens/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'trip_info.dart'; // Certifique-se de importar a tela TripInfoScreen
 
@@ -26,8 +27,13 @@ class TripDetailScreen extends StatelessWidget {
   }
 
   void _goToHome(BuildContext context) {
-    Navigator.popUntil(
-        context, (route) => route.isFirst); // Retorna à tela inicial
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              HomeScreen()), // Certifique-se de importar a tela HomeScreen
+      (Route<dynamic> route) => false, // Remove todas as rotas anteriores
+    );
   }
 
   @override
