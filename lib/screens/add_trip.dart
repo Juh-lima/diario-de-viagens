@@ -172,14 +172,14 @@ class _AddTripScreenState extends State<AddTripScreen> {
 
   Future<void> _saveTrip() async {
     String destination = _destinationController.text;
-    String startDate = _startDateController.text;
-    String endDate = _endDateController.text;
+    //String startDate = _startDateController.text;
+    //String endDate = _endDateController.text;
     String description = _descriptionController.text; // Obtém a descrição
 
     // Verifica se todos os campos estão preenchidos
     if (destination.isEmpty ||
-        startDate.isEmpty ||
-        endDate.isEmpty ||
+        //  startDate.isEmpty ||
+        // endDate.isEmpty ||
         description.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -206,8 +206,8 @@ class _AddTripScreenState extends State<AddTripScreen> {
       await TripService().addTrip(
         userId: user.uid,
         destination: destination,
-        startDate: startDate,
-        endDate: endDate,
+        //startDate: startDate,
+        //endDate: endDate,
         description: description, // Passa a descrição da viagem
         imageUrl: imageUrl, // Passa a URL da imagem, se houver
       );
@@ -221,8 +221,8 @@ class _AddTripScreenState extends State<AddTripScreen> {
 
       // Limpa os campos após o salvamento
       _destinationController.clear();
-      _startDateController.clear();
-      _endDateController.clear();
+      // _startDateController.clear();
+      // _endDateController.clear();
       _descriptionController.clear(); // Limpa o campo de descrição
       setState(() {
         _image = null;
@@ -279,24 +279,24 @@ class _AddTripScreenState extends State<AddTripScreen> {
               maxLines: 1, // Permite várias linhas
             ),
             SizedBox(height: 20.0),
-            TextField(
-              controller: _startDateController,
-              decoration: InputDecoration(
-                labelText: 'Data de Início (AAAA-MM-DD)',
-                prefixIcon: Icon(Icons.calendar_today),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _endDateController,
-              decoration: InputDecoration(
-                labelText: 'Data de Fim (AAAA-MM-DD)',
-                prefixIcon: Icon(Icons.calendar_today),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16.0),
+            // TextField(
+            //   controller: _startDateController,
+            //   decoration: InputDecoration(
+            //     labelText: 'Data de Início (AAAA-MM-DD)',
+            //     prefixIcon: Icon(Icons.calendar_today),
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
+            // SizedBox(height: 16.0),
+            // TextField(
+            //   controller: _endDateController,
+            //   decoration: InputDecoration(
+            //     labelText: 'Data de Fim (AAAA-MM-DD)',
+            //     prefixIcon: Icon(Icons.calendar_today),
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
+            // SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _pickImage,
               child: Text('Selecionar Imagem'),

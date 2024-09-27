@@ -1,27 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diario_de_viagens/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'trip_info.dart'; // Certifique-se de importar a tela TripInfoScreen
 
 class TripDetailScreen extends StatelessWidget {
-  final List<Map<String, String>> trips = [
-    {
-      'name': 'Viagem à Praia',
-      'description': 'Uma viagem relaxante à beira-mar!',
-      'image': 'url_da_imagem_1' // Substitua com a URL ou caminho da imagem
-    },
-    {
-      'name': 'Viagem à Montanha',
-      'description': 'Uma aventura nas montanhas!',
-      'image': 'url_da_imagem_2' // Substitua com a URL ou caminho da imagem
-    },
-    // Adicione mais viagens conforme necessário
-  ];
-
-  void _goToTripInfo(BuildContext context, Map<String, String> trip) {
+  void _goToTripInfo(BuildContext context, Map<String, dynamic> trip) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => TripInfoScreen(trip: trip),
+        builder: (context) =>
+            TripInfoScreen(trip: trip), // Mantenha Map<String, dynamic>
       ),
     );
   }
@@ -61,34 +49,64 @@ class TripDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: trips.length,
-                itemBuilder: (context, index) {
-                  final trip = trips[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: ListTile(
-                      title: Text(trip['name']!),
-                      subtitle: Text(trip['description']!),
-                      trailing: ElevatedButton(
-                        onPressed: () => _goToTripInfo(context, trip),
-                        child: const Text('Mais Detalhes'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          foregroundColor: Colors.white,
+              child: StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('trips').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Erro: ${snapshot.error}'));
+                  }
+
+                  final trips = snapshot.data!.docs
+                      .map((doc) => {
+                            'name': doc[
+                                'description'], // ajuste conforme necessário
+                            'description': doc[
+                                'destination'], // ajuste conforme necessário
+                            'image':
+                                doc['imageUrl'], // ajuste conforme necessário
+                          })
+                      .toList();
+
+                  return ListView.builder(
+                    itemCount: trips.length,
+                    itemBuilder: (context, index) {
+                      final trip = trips[index];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListTile(
+                          title: Text(trip['name']!),
+                          subtitle: Text(trip['description']!),
+                          trailing: ElevatedButton(
+                            onPressed: () => _goToTripInfo(context, trip),
+                            child: const Text('Mais Detalhes'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
               ),
             ),
+            // Botão de retorno para a HomeScreen
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _goToHome(context), // Volta para a tela inicial
-              child: const Text('Voltar para Home'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home'); // Navegar para o mapa
+              },
+              child: Text('Voltar para Home'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.blueAccent,
+                minimumSize: Size(150, 40),
+                backgroundColor: Colors.white, // Cor do fundo do botão
+                foregroundColor: Colors.blueAccent, // Cor do texto
               ),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
 import 'screens/add_trip.dart';
@@ -11,9 +12,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Inicialize o Firebase com as opções para diferentes plataformas
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  //await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   runApp(MyApp());
 }
